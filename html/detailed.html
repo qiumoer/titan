@@ -1,0 +1,25 @@
+<article ng-controller = 'detailedCtrl' class="detail">
+	<img class="imgpic" ng-src="{{detail[5].content}}" />
+	<div class="detailNeirong">
+		<h3>{{list.title}}</h3>
+		<p class="times_titan">
+			<span>{{list.newstime | date:'MM-dd HH:mm'}}</span>
+			<span>{{list.authorName}}</span>
+			<span>{{list.autohrDescription}}</span>
+		</p>
+		<ul>
+			<li>
+				<a href="" class="author">
+					<img ng-src="{{list.authorHeadImage}}"/>
+					<span>{{list.authorName}}</span>
+					<span>{{list.autohrDescription}}</span>
+					
+				</a>
+				<p class="op"><a href="">+订阅</a></p>
+			</li>
+		</ul>
+		<div id="titanBox"></div>
+		
+	</div>
+	<div class="loading_img" ng-hide = 'loadg'><img src="images/loading.gif" /><div class="bgcolor"></div></div>
+</article>

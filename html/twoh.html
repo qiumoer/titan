@@ -1,0 +1,22 @@
+<article ng-controller = "twoCtrl" class="twoH">
+	<span class="fiexdTime">{{two[0].newstime | date:'MM-dd'}}</span>
+	<div class="timeBox">
+		<div class="bianxian" ng-repeat = "twoList in two" >
+			<dl >
+				<dd>
+					<div class="twoTitel">
+						<h3>{{twoList.shorttitle}}</h3>
+						<span></span>
+					</div>
+					<p class="yuandian">
+						<span>{{twoList.newstime | date:'HH:mm'}}</span>	
+					</p>
+					<p class="text">{{twoList.content}}</p>
+					
+				</dd>
+				<dt><img ng-src="{{twoList.img[0].imgurl}}"/></dt>
+			</dl>
+		</div>
+	</div>
+	<div class="loading_img" ng-hide = 'loadg'><img src="images/loading.gif" /><div class="bgcolor"></div></div>
+</article>

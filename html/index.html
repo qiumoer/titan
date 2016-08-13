@@ -1,0 +1,21 @@
+<article ng-controller = "indexCtrl" class="indexOne">
+	<ul>
+		<li ng-repeat= "new in news">
+			<a ng-href="#/index/{{$index}}"><img ng-src = "{{new.imgurl}}" class="pic1"/></a>
+			<div class="spans">
+				<span class="times">{{new.newstime | date:'MM-dd HH:mm'}}</span><!--({{ today | date:'yyyy-MM-dd' }}){{time|date:'yyyy-MM-dd hh:mm:ss EEEE'}}-->
+				<span class="names">{{new.authorName}}</span>
+			</div>
+			
+			<img ng-src="{{new.authorHeadImage}}" / class="pic2">
+			<div class="box1">
+				<h3>{{new.title}}</h3>
+				<img src="images/pinlun.png" />
+				<span>{{new.commentnum}}</span>
+			</div>
+			
+			<div class="box2"></div>
+		</li>
+	</ul>
+	<div class="loading_img" ng-hide = 'loadg'><img src="images/loading.gif" /><div class="bgcolor"></div></div>
+</article>

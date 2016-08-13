@@ -1,0 +1,25 @@
+<article ng-controller = "phoneCtrl" class="phoneCtrl">
+	<div class="fanhui">
+		<a href="#/index">></a><p>手机登录</p>
+	</div>
+	<div class="phoneBox">
+		<form ng-submit = 'tijiao()'><!--action="#/index"--> 
+			<div class="cell_phone">
+				<label for="phoneNub">手机:</label><input type="text" id="phoneNub" placeholder="手机号" ng-model ="cellphone" ng-blur = "shoujihao()"/>	
+			</div>
+			
+			<p id="error_one" ng-hide='myhide'></p>
+			
+			<div class="phone_pass">
+				<label for="pass">密码:</label><input type="password" id="pass"   placeholder="密码" ng-model="password" ng-blur="mima()"/ >
+			</div>
+			
+			<p id="error_two" ng-hide='mymima'></p>
+			
+			<input type="submit" placeholder="登录"  id='tijiao' />
+			
+			<p class="passOut">忘记密码</p>
+		</form>
+	</div>
+	
+</article>

@@ -1,0 +1,66 @@
+<article  ng-controller = 'newsCtrl' class="newsZuixin">
+
+		<div class="swiper-container">
+	        <div class="swiper-wrapper">
+	            <div class="swiper-slide" >
+	            	<img ng-src="{{news[0].imgurl}}"/>
+	            	<div class="bgTouming"></div>
+	            	<p>{{news[0].shorttitle}}</p>
+	            </div>
+	             <div class="swiper-slide" >
+	            	<img ng-src="{{news[1].imgurl}}"/>
+	            	<div class="bgTouming"></div>
+	            	<p>{{news[1].shorttitle}}</p>
+	            </div>
+	             <div class="swiper-slide" >
+	            	<img ng-src="{{news[2].imgurl}}"/>
+	            	<div class="bgTouming"></div>
+	            	<p>{{news[2].shorttitle}}</p>
+	            </div>
+	             <div class="swiper-slide" >
+	            	<img ng-src="{{news[3].imgurl}}"/>
+	            	<div class="bgTouming"></div>
+	            	<p>{{news[4].shorttitle}}</p>
+	            </div>
+	             <div class="swiper-slide" >
+	            	<img ng-src="{{news[4].imgurl}}"/>
+	            	<div class="bgTouming"></div>
+	            	<p>{{news[5].shorttitle}}</p>
+	            </div>
+	            
+	        </div>
+        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	        <!-- Add Arrows -->
+	       <!-- <div class="swiper-button-next"></div>
+	        <div class="swiper-button-prev"></div>-->
+       
+   	</div>
+   <div ng-controller='listNews' class="newslink" >
+	   	<dl ng-repeat='new in zuixin'>
+			<dt><img ng-src="{{new.imgurl}}"</dt>
+			<dd>
+				<h3>{{new.shorttitle}}</h3>
+				<div>
+					<span>{{new.summary}}</span>
+					<img src="images/pinlun.png" />
+					<span>{{new.commentnum}}</span>
+				</div>
+				
+			</dd>
+		</dl>
+   </div>
+	 
+   <div class="loading_img" ng-hide = 'loadg'><img src="images/loading.gif" /><div class="bgcolor"></div></div>
+</article>	
+		
+		
+		
+		
+		
+		
+		
+		
+	
+
+
