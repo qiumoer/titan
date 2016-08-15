@@ -1,5 +1,5 @@
 <article  ng-controller = 'newsCtrl' class="newsZuixin">
-
+	<div class="picBox">
 		<div class="swiper-container">
 	        <div class="swiper-wrapper">
 	            <div class="swiper-slide" >
@@ -35,6 +35,7 @@
 	       <!-- <div class="swiper-button-next"></div>
 	        <div class="swiper-button-prev"></div>-->
        
+   		</div>
    	</div>
    <div ng-controller='listNews' class="newslink" >
 	   	<dl ng-repeat='new in zuixin'>
@@ -50,7 +51,6 @@
 			</dd>
 		</dl>
    </div>
-	 
    <div class="loading_img" ng-hide = 'loadg'><img src="images/loading.gif" /><div class="bgcolor"></div></div>
 </article>	
 		

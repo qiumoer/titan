@@ -6,11 +6,12 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
-		
+		<!--<link rel="stylesheet" type="text/css" href="ionic-v1.3.1/css/ionic.min.css" />-->
 		
 		<script src="js/angular.js"></script>
 		<script src="js/angular-route.js"></script>
 		<script src="js/swiper.min.js"></script>
+	<!--	<script src="ionic-v1.3.1/js/ionic.min.js"></script>-->
 		
 	</head>
 	<body>
@@ -25,7 +26,6 @@
 		<div ng-view='' class="box"></div>
 		
 		<footer class="footerWrip">
-			<div class="touming"></div>
 			<ul>
 				<li class="list1">
 					<a href="#/index"><img src="images/news.png"/></a>
@@ -144,19 +144,37 @@
 				})
 			});
 			//主页路由
-			app.controller('indexCtrl',['$scope','$http','$rootScope','$routeParams','$rootScope',function($scope,$http,$rootScope,$routeParams,$rootScope){
+			app.controller('indexCtrl',['$scope','$http','$rootScope','$routeParams','$rootScope','scl',function($scope,$http,$rootScope,$routeParams,$rootScope,scl){
+				//菊花
 				$rootScope.loadg =false;
+				//加载更多loading
+				$rootScope.loading = false;
+				$rootScope.shuaxin = true;
+				$scope.num = 5;
+				//document.getElementsByTagName('article')[0].style.top = 90 +"px";
 				//$scope.name = '/publish/app/list/newsHandle/newsHandleList.json';
-				$http.jsonp('http://127.0.0.1:8888/index?callback=JSON_CALLBACK')
-				.success(function(data){
-					$scope.news = data.datas;
-					$rootScope.loadg = true;
-					/*console.log()
-					$rootScope.new = data.datas[$routeParams.id].detailurl;
-					console.log($rootScope.new)*/
-					//console.log(data)
-				})
-				//$scope.$apply()
+				$rootScope.jiazaifn = function(){
+					$scope.num +=5;
+					$http.jsonp('http://127.0.0.1:8888/index?callback=JSON_CALLBACK')
+					.success(function(data){
+						//$scope.sum = data.datas;
+						//拆分每次加载时只能取5条数据
+						//console.log(data.datas.slice(0,$scope.num));
+						document.getElementsByTagName('article')[0].style.top = 89+"px";
+						$scope.news = data.datas.slice(0,$scope.num);
+						$rootScope.loadg = true;
+						$rootScope.loading = true;
+						$rootScope.shuaxin = true;
+					});
+					
+				};
+				$rootScope.jiazaifn();
+				//点击加载更多
+				$rootScope.loadMore = function(){
+					$scope.jiazaifn();
+				};
+				scl.method();
+				
 			}]);
 			//最新页路由
 			//轮播图
@@ -177,7 +195,8 @@
 					$rootScope.loadg = true;
 					$scope.news = data.datas;
 					//console.log(data)
-				})
+				});
+				
 				
 			}]);
 			//新闻
@@ -295,7 +314,7 @@
 						}else{
 							$scope.mymima=true;
 							console.log(name,pass);
-							$http.get('http://127.0.0.1:8020/titan/php/phone.php?name='+name+'&password='+pass)
+							$http.get('http://127.0.0.1/titan/php/phone.php?name='+name+'&password='+pass)
 								.success(function(data){
 									//判断后端是否存在这个账号
 									/*if(data.){
@@ -357,7 +376,7 @@
 					 sum += str[parseInt(Math.random()*str.length)];
 				};
 				$scope.yanzhengma = function(){
-					alert(111)
+					//alert(111)
 					yanzheng.innerHTML = sum;
 				};
 				
@@ -391,7 +410,7 @@
 						}else{
 							$scope.mymima=true;
 							console.log(name,pass);
-							$http.get('http://127.0.0.1:8020/titan/php/register.php?name='+name)
+							$http.get('http://127.0.0.1/titan/php/register.php?name='+name)
 								.success(function(data){
 									//判断后端是否存在这个账号
 									//if(data.){
@@ -399,11 +418,117 @@
 									//}
 								console.log(data);
 								passError.innerHTML = data;	
-								$window.location = "#/index"	
+								//$window.location = "#/index"	
 							})
 						}
 				}
 			}]);
+			app.service('scl',['$rootScope',function($rootScope){
+				return {
+					method:function(){
+						var touch = {};
+						//监听按下事件
+			document.getElementsByTagName('article')[0].addEventListener('touchstart',function(e){
+				console.log("点击滑动前");
+						touch.x1 = e.targetTouches[0].pageX;
+						touch.y1 = e.targetTouches[0].pageY;
+						console.log('X:' + e.targetTouches[0].pageX + ' Y:' + e.targetTouches[0].pageY);
+			
+			});
+			//移动时改变top值
+			document.getElementsByTagName('article')[0].addEventListener('touchmove',function(e){
+				console.log(e);
+				touch.x3 = e.changedTouches[0].pageX;
+				touch.y3 = e.changedTouches[0].pageY;
+				this.style.top = touch.y3+"px";
+				
+					$rootScope.shuaxin = false;
+			
+			});
+			//监听移动事件
+			document.getElementsByTagName('article')[0].addEventListener('touchend',function(e){
+				console.log("点击滑动后");
+				touch.x2 = e.changedTouches[0].pageX;
+				touch.y2 = e.changedTouches[0].pageY;
+				console.log('X:' + e.changedTouches[0].pageX + ' Y:' + e.changedTouches[0].pageY)
+				var scroll  = direction(touch.x1, touch.x2, touch.y1, touch.y2);
+				if(scroll == 'bottom'){
+					this.style.top =89+"px";
+					$rootScope.jiazaifn();
+				}
+				
+				
+				
+				
+				function direction(xStart, xEnd, yStart, yEnd) {
+						return Math.abs(xStart - xEnd) >= Math.abs(yStart - yEnd) ? (xStart >= xEnd ? "left" : "right") : (yStart >= yEnd ? "top" : "bottom");
+					}
+				
+			})	
+			}
+					
+			}
+				
+			}]);
+			/*app.service('swipe', [function() {
+			return {
+				method: function(direct, callback) {
+					var callbackTop, callbackdown, callbackLeft, callbackRight;
+					//判断方向，执行回调
+					switch(direct) {
+						case 'top':
+							callbackTop = callback;
+							break;
+						case 'bottom':
+							callbackBottom = callback;
+							break;
+						case 'left':
+							callbackLeft = callback;
+							break;
+						case 'right':
+							callbackRight = callback;
+							break;
+					}
+					var touch = {};
+					document.getElementsByTagName('body')[0].addEventListener('touchstart', function(e) {
+						console.log("点击滑动前");
+						touch.x1 = e.targetTouches[0].pageX;
+						touch.y1 = e.targetTouches[0].pageY;
+						console.log('X:' + e.targetTouches[0].pageX + ' Y:' + e.targetTouches[0].pageY);
+						//$scope.$apply();
+					});
+					//document.getElementsByTagName('body')[0].addEventListener('touchend', ab);
+					var ab = function(e) {
+						console.log("点击滑动后");
+						touch.x2 = e.changedTouches[0].pageX;
+						touch.y2 = e.changedTouches[0].pageY;
+						console.log('X:' + e.changedTouches[0].pageX + ' Y:' + e.changedTouches[0].pageY)
+						console.log(direction(touch.x1, touch.x2, touch.y1, touch.y2));
+						var swiDirection = direction(touch.x1, touch.x2, touch.y1, touch.y2)
+						if(swiDirection == 'bottom') {
+							//手动刷新
+							callbackBottom();
+							//$scope.$apply();
+						} else if(swiDirection == 'top') {
+							//手动刷新
+							console.log(callbackTop)
+							callbackTop();
+							//$scope.$apply();
+						} else if(swiDirection == 'left') {
+							//手动刷新
+							console.log(callbackLeft)
+							callbackLeft();
+							//$scope.$apply();
+						}
+					}
+
+					function direction(xStart, xEnd, yStart, yEnd) {
+						return Math.abs(xStart - xEnd) >= Math.abs(yStart - yEnd) ? (xStart >= xEnd ? "left" : "right") : (yStart >= yEnd ? "top" : "bottom");
+					}
+					document.getElementsByTagName('body')[0].addEventListener('touchend', ab);
+				}
+			}
+		}]);*/
 			
 	</script>
 </html>

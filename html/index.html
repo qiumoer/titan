@@ -1,4 +1,7 @@
 <article ng-controller = "indexCtrl" class="indexOne">
+	<div class="shuaxin" ng-show = "!shuaxin">
+		<p>刷新中...</p>
+	</div>
 	<ul>
 		<li ng-repeat= "new in news">
 			<a ng-href="#/index/{{$index}}"><img ng-src = "{{new.imgurl}}" class="pic1"/></a>
@@ -7,7 +10,7 @@
 				<span class="names">{{new.authorName}}</span>
 			</div>
 			
-			<img ng-src="{{new.authorHeadImage}}" / class="pic2">
+			<img ng-src="{{new.authorHeadImage}}" class="pic2" / >
 			<div class="box1">
 				<h3>{{new.title}}</h3>
 				<img src="images/pinlun.png" />
@@ -16,6 +19,9 @@
 			
 			<div class="box2"></div>
 		</li>
+		
 	</ul>
+	<p class="jiazai" ng-show="loading" ng-click="loadMore()">加载更多</p>
 	<div class="loading_img" ng-hide = 'loadg'><img src="images/loading.gif" /><div class="bgcolor"></div></div>
+	
 </article>
